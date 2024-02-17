@@ -1,16 +1,16 @@
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
-import { MAX_DISPLACEMENT, isValid, encrypt as modulo } from "./lib/modulo";
+import { MAX_DISPLACEMENT, isValid, decrypt as modulo } from "./lib/modulo";
 import { Clipboard } from "./Clipboard";
 
-export function EncryptView() {
+export function DecryptView() {
   const [raw, setRaw] = useState("");
   const [mod, setMod] = useState(15);
-  const [encrypted, setEncrypted] = useState<string | undefined>(undefined);
+  const [decrypted, setDecrypted] = useState<string | undefined>(undefined);
 
   const encrypt = () => {
     const encrypted = modulo(raw, mod);
-    setEncrypted(encrypted);
+    setDecrypted(encrypted);
     console.log({ encrypted });
   };
 
@@ -36,7 +36,7 @@ export function EncryptView() {
         type="number"
         onChange={(t) => setMod(Number(t.currentTarget.value))}
       ></TextField>
-      {encrypted && <Clipboard>{encrypted}</Clipboard>}
+      {decrypted && <Clipboard>{decrypted}</Clipboard>}
       <Button
         type="submit"
         disabled={!isValid(raw) || mod < 0 || mod >= MAX_DISPLACEMENT}
